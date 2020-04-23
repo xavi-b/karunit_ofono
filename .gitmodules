@@ -1,3 +1,11 @@
 [submodule "third-party/Font-Awesome"]
 	path = third-party/Font-Awesome
 	url = git@github.com:FortAwesome/Font-Awesome.git
+    branch = master
+    ignore = all
+
+[submodule "third-party/libqofono"]
+	path = third-party/libqofono
+	url = https://git.sailfishos.org/mer-core/libqofono.git
+    branch = master
+    ignore = all

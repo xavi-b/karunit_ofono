@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QVBoxLayout>
-#include <qofono-qt5/qofonovoicecall.h>
+#include <qofonovoicecall.h>
 
 class VoiceCallWidget : public QWidget
 {

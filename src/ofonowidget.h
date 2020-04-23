@@ -2,10 +2,10 @@
 #define OFONOWIDGET_H
 
 #include <QWidget>
-#include <qofono-qt5/qofonomanager.h>
-#include <qofono-qt5/qofonomodem.h>
-#include <qofono-qt5/qofonovoicecallmanager.h>
-#include <qofono-qt5/qofonovoicecall.h>
+#include <qofonomanager.h>
+#include <qofonomodem.h>
+#include <qofonovoicecallmanager.h>
+#include <qofonovoicecall.h>
 #include <QTabWidget>
 #include <QTabBar>
 #include <QDebug>
