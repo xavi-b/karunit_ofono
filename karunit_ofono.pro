@@ -5,21 +5,17 @@ QT             += widgets dbus
 TARGET          = karunit_ofono_plugin
 DESTDIR         = $$PWD/../karunit/app/plugins
 
-LIBS += -L$$PWD/third-party/libqofono/src/
-LIBS += -lqofono-qt5
+LIBS += -L$$PWD/third-party/libqofono/src/ -lqofono-qt5
 INCLUDEPATH += $$PWD/third-party/libqofono/src/
-DEPENDPATH += $$PWD/third-party/libqofono/src/
 
-LIBS += -L$$PWD/../karunit/lib/
-LIBS += -L$$PWD/../karunit/app/plugins/
-
-LIBS += -lplugininterface
+LIBS += -L$$PWD/../karunit/plugininterface/ -lplugininterface
 INCLUDEPATH += $$PWD/../karunit/plugininterface
-DEPENDPATH += $$PWD/../karunit/plugininterface
 
-LIBS += -lcommon
+LIBS += -L$$PWD/../karunit/common/ -lcommon
 INCLUDEPATH += $$PWD/../karunit/common
-DEPENDPATH += $$PWD/../karunit/common
+
+LIBS += -L$$PWD/../karunit/third-party/xblog/ -lxblog
+INCLUDEPATH += $$PWD/../karunit/third-party/xblog/src
 
 SUBDIRS += \
     src/

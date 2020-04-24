@@ -15,11 +15,6 @@ KU::PLUGIN::PluginVersion KU_Ofono_Plugin::version() const
     return { 1, 0, 0 };
 }
 
-QSet<KU::PLUGIN::PluginInfo> KU_Ofono_Plugin::dependencies() const
-{
-    return QSet<KU::PLUGIN::PluginInfo>();
-}
-
 QString KU_Ofono_Plugin::license() const
 {
     return "LGPL";
@@ -30,7 +25,7 @@ QIcon KU_Ofono_Plugin::icon() const
     return QIcon();
 }
 
-bool KU_Ofono_Plugin::initialize(const QSet<KU::PLUGIN::PluginInterface*>& plugins)
+bool KU_Ofono_Plugin::initialize()
 {
     if(QFontDatabase::addApplicationFont(":/FontAwesome") < 0)
         qWarning() << "FontAwesome cannot be loaded !";
