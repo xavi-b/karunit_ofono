@@ -30,6 +30,7 @@ private:
 public:
     OfonoWidget(QWidget* parent = nullptr);
 
+    void call(QString const& number);
 };
 
 #endif // OFONOWIDGET_H

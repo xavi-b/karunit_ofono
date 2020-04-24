@@ -1,5 +1,14 @@
 #include "plugin.h"
 
+void KU_Ofono_PluginConnector::pluginSlot(const QString& signal, const QVariantMap& data)
+{
+    if(signal == "dial")
+    {
+        if(!data["number"].isNull() && !data["number"].toString().isEmpty())
+            emit callSignal(data["number"].toString());
+    }
+}
+
 QString KU_Ofono_Plugin::name() const
 {
     return "Ofono";
@@ -30,6 +39,11 @@ bool KU_Ofono_Plugin::initialize()
     if(QFontDatabase::addApplicationFont(":/FontAwesome") < 0)
         qWarning() << "FontAwesome cannot be loaded !";
 
+    this->ofonoWidget = new OfonoWidget;
+
+    this->pluginConnector = new KU_Ofono_PluginConnector;
+    this->setPluginConnector(this->pluginConnector);
+    connect(this->pluginConnector, &KU_Ofono_PluginConnector::callSignal, this->ofonoWidget, &OfonoWidget::call);
     return true;
 }
 
@@ -40,8 +54,7 @@ bool KU_Ofono_Plugin::stop()
 
 QWidget* KU_Ofono_Plugin::createWidget()
 {
-    OfonoWidget* widget = new OfonoWidget;
-    return widget;
+    return this->ofonoWidget;
 }
 
 QWidget* KU_Ofono_Plugin::createSettingsWidget()

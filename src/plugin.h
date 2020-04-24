@@ -11,6 +11,16 @@
 #include "settings.h"
 #include "ofonowidget.h"
 
+class KU_Ofono_PluginConnector : public KU::PLUGIN::PluginConnector
+{
+    Q_OBJECT
+public:
+    virtual void pluginSlot(QString const& signal, QVariantMap const& data) override;
+
+signals:
+    void callSignal(QString const& number);
+};
+
 class KU_Ofono_Plugin : public QObject, public KU::PLUGIN::PluginInterface
 {
     Q_OBJECT
@@ -30,6 +40,10 @@ public:
     virtual QWidget* createSettingsWidget() override;
     virtual bool loadSettings() override;
     virtual bool saveSettings() const override;
+
+private:
+    OfonoWidget* ofonoWidget = nullptr;
+    KU_Ofono_PluginConnector* pluginConnector = nullptr;
 };
 
 

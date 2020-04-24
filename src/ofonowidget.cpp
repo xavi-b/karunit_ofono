@@ -76,11 +76,7 @@ OfonoWidget::OfonoWidget(QWidget *parent)
     this->defaultWidget = new DefaultCallWidget;
     this->tabWidget->addTab(this->defaultWidget, "\uf015");
 
-    connect(this->defaultWidget, &DefaultCallWidget::call, this, [=](QString const& number)
-    {
-        if(this->ofonoVoiceCallManager != nullptr)
-            this->ofonoVoiceCallManager->dial(number, "enabled");
-    });
+    connect(this->defaultWidget, &DefaultCallWidget::call, this, &OfonoWidget::call);
     connect(this->defaultWidget, &DefaultCallWidget::hangupAll, this, [=]()
     {
         if(this->ofonoVoiceCallManager != nullptr)
@@ -110,5 +106,11 @@ OfonoWidget::OfonoWidget(QWidget *parent)
     {
         qDebug() << "defaultModemChanged" << modem;
     });
+}
+
+void OfonoWidget::call(QString const& number)
+{
+    if(this->ofonoVoiceCallManager != nullptr)
+        this->ofonoVoiceCallManager->dial(number, "enabled");
 }
 
