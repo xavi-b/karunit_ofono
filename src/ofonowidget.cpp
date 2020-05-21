@@ -89,6 +89,12 @@ OfonoWidget::OfonoWidget(QWidget *parent)
 
     connect(this->ofonoManager, &QOfonoManager::availableChanged, this, [=](bool available)
     {
+        if(this->ofonoManager->modems().size() == 0)
+        {
+            qDebug() << "no modem";
+            return;
+        }
+
         qDebug() << "availableChanged" << available << this->ofonoManager->modems().at(0);
         this->ofonoModem = new QOfonoModem(this);
         this->ofonoModem->setModemPath(this->ofonoManager->modems().at(0));
