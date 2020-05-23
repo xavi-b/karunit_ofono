@@ -62,6 +62,11 @@ QWidget* KU_Ofono_Plugin::createSettingsWidget()
     return new QLabel("Ofono");
 }
 
+QWidget* KU_Ofono_Plugin::createAboutWidget()
+{
+    return nullptr;
+}
+
 bool KU_Ofono_Plugin::loadSettings()
 {
     return true;
