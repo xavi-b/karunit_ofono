@@ -21,6 +21,3 @@ SUBDIRS += \
     src/
 
 include(src/src.pri)
-
-RESOURCES += \
-    karunit_ofono.qrc

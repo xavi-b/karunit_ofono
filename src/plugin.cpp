@@ -36,9 +36,6 @@ QIcon KU_Ofono_Plugin::icon() const
 
 bool KU_Ofono_Plugin::initialize()
 {
-    if(QFontDatabase::addApplicationFont(":/karunit_ofono/FontAwesome") < 0)
-        qWarning() << "FontAwesome cannot be loaded !";
-
     this->ofonoWidget = new OfonoWidget;
 
     this->pluginConnector = new KU_Ofono_PluginConnector;

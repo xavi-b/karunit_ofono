@@ -67,7 +67,7 @@ OfonoWidget::OfonoWidget(QWidget *parent)
 {
     this->setMinimumSize(640, 400);
 
-    this->setFont(QFont("FontAwesome"));
+    this->setFont(QFont("Font Awesome 5 Free"));
 
     QVBoxLayout* layout = new QVBoxLayout;
 
