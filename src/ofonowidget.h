@@ -31,6 +31,9 @@ public:
     OfonoWidget(QWidget* parent = nullptr);
 
     void call(QString const& number);
+
+signals:
+    void log(QString const& log);
 };
 
 #endif // OFONOWIDGET_H

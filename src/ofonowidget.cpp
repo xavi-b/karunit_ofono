@@ -4,21 +4,21 @@ void OfonoWidget::connectModem()
 {
     connect(this->ofonoModem, &QOfonoModem::reportError, this, [=](QString const& errorString)
     {
-        qDebug() << "reportError" << errorString;
+        emit log("reportError: " + errorString);
     });
     connect(this->ofonoModem, &QOfonoModem::poweredChanged, this, [=](bool powered)
     {
-        qDebug() << "poweredChanged" << powered;
+        emit log(QString("poweredChanged: %1").arg(powered));
         this->ofonoModem->setOnline(true);
     });
     connect(this->ofonoModem, &QOfonoModem::onlineChanged, this, [=](bool online)
     {
-        qDebug() << "onlineChanged" << online;
+        emit log(QString("onlineChanged: %1").arg(online));
         this->ofonoVoiceCallManager = new QOfonoVoiceCallManager(this);
         this->ofonoVoiceCallManager->setModemPath(this->ofonoModem->modemPath());
         connectVoiceCallManager();
     });
-    qDebug() << "setPowered";
+    emit log("setPowered");
     //this->ofonoModem->setPowered(true);
     QDBusMessage message = QDBusMessage::createMethodCall("org.ofono",
                                                           this->ofonoModem->modemPath(),
@@ -30,14 +30,15 @@ void OfonoWidget::connectModem()
 
     message.setArguments(arguments);
 
-    qDebug() << QDBusConnection::systemBus().send(message);
+    bool res = QDBusConnection::systemBus().send(message);
+    emit log(QString("QDBusConnection::systemBus().send(message): %1").arg(res));
 }
 
 void OfonoWidget::connectVoiceCallManager()
 {
     connect(this->ofonoVoiceCallManager, &QOfonoVoiceCallManager::callAdded, this, [=](const QString &call)
     {
-        qDebug() << "callAdded" << call;
+        emit log("callAdded: " + call);
         auto ofonoVoiceCallWidget = new VoiceCallWidget(call, this);
         auto it = this->ofonoVoiceCallWidgets.find(call);
         if(it == this->ofonoVoiceCallWidgets.end())
@@ -48,7 +49,7 @@ void OfonoWidget::connectVoiceCallManager()
     });
     connect(this->ofonoVoiceCallManager, &QOfonoVoiceCallManager::callRemoved, this, [=](const QString &call)
     {
-        qDebug() << "callRemoved" << call;
+        emit log("callRemoved: " + call);
         auto it = this->ofonoVoiceCallWidgets.find(call);
         if(it != this->ofonoVoiceCallWidgets.end())
         {
@@ -58,7 +59,7 @@ void OfonoWidget::connectVoiceCallManager()
     });
     connect(this->ofonoVoiceCallManager, &QOfonoVoiceCallManager::dialComplete, this, [=](bool status)
     {
-        qDebug() << "dialComplete" << status << this->ofonoVoiceCallManager->errorMessage();
+        emit log(QString("dialComplete: [%1] ").arg(status) + this->ofonoVoiceCallManager->errorMessage());
     });
 }
 
@@ -91,26 +92,26 @@ OfonoWidget::OfonoWidget(QWidget *parent)
     {
         if(this->ofonoManager->modems().size() == 0)
         {
-            qDebug() << "no modem";
+            emit log("no modem");
             return;
         }
 
-        qDebug() << "availableChanged" << available << this->ofonoManager->modems().at(0);
+        emit log(QString("availableChanged [%1] ").arg(available) + this->ofonoManager->modems().at(0));
         this->ofonoModem = new QOfonoModem(this);
         this->ofonoModem->setModemPath(this->ofonoManager->modems().at(0));
         connectModem();
     });
     connect(this->ofonoManager, &QOfonoManager::modemAdded, this, [=](const QString &modem)
     {
-        qDebug() << "modemAdded" << modem;
+        emit log("modemAdded: " + modem);
     });
     connect(this->ofonoManager, &QOfonoManager::modemRemoved, this, [=](const QString &modem)
     {
-        qDebug() << "modemRemoved" << modem;
+        emit log("modemRemoved: " + modem);
     });
     connect(this->ofonoManager, &QOfonoManager::defaultModemChanged, this, [=](const QString &modem)
     {
-        qDebug() << "defaultModemChanged" << modem;
+        emit log("defaultModemChanged: " + modem);
     });
 }
 

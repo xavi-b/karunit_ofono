@@ -41,6 +41,8 @@ bool KU_Ofono_Plugin::initialize()
     this->pluginConnector = new KU_Ofono_PluginConnector;
     this->setPluginConnector(this->pluginConnector);
     connect(this->pluginConnector, &KU_Ofono_PluginConnector::callSignal, this->ofonoWidget, &OfonoWidget::call);
+    connect(this->ofonoWidget, &OfonoWidget::log, this->pluginConnector, &KU::PLUGIN::PluginConnector::log);
+
     return true;
 }
 
