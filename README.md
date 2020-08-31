@@ -1,3 +1,3 @@
 # dependencies
 qt5
-qofono-qt5
+fontawesome
