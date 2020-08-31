@@ -31,7 +31,7 @@ QString KU_Ofono_Plugin::license() const
 
 QIcon KU_Ofono_Plugin::icon() const
 {
-    return QIcon();
+    return QIcon::fromTheme("modem");
 }
 
 bool KU_Ofono_Plugin::initialize()
