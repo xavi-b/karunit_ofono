@@ -13,10 +13,10 @@ PRE_TARGETDEPS += $$libqofono.target
 LIBS += -L$$PWD/third-party/libqofono/src/ -lqofono-qt5
 INCLUDEPATH += $$PWD/third-party/libqofono/src/
 
-LIBS += -L$$PWD/../karunit/plugininterface/ -lplugininterface
+LIBS += -L$$PWD/../karunit/plugininterface/ -lkarunit_plugininterface
 INCLUDEPATH += $$PWD/../karunit/plugininterface
 
-LIBS += -L$$PWD/../karunit/common/ -lcommon
+LIBS += -L$$PWD/../karunit/common/ -lkarunit_common
 INCLUDEPATH += $$PWD/../karunit/common
 
 LIBS += -L$$PWD/../karunit/third-party/xblog/lib -lxblog
