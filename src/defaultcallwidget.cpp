@@ -9,7 +9,7 @@ DefaultCallWidget::DefaultCallWidget(QWidget* parent)
     this->dialEdit = new QLineEdit;
     this->dialEdit->setPlaceholderText("Number to call");
     topLayout->addWidget(this->dialEdit, 1);
-    QPushButton* eraseBtn = new QPushButton("\uf55a");
+    QPushButton* eraseBtn = new QPushButton(QIcon::fromTheme("edit-clear"), "");
     connect(eraseBtn, &QPushButton::clicked, this, [=]()
     {
         this->dialEdit->setText(this->dialEdit->text().chopped(1));
@@ -30,9 +30,9 @@ DefaultCallWidget::DefaultCallWidget(QWidget* parent)
     gridLayout->addWidget(this->addButton("+"), 3, 0);
     gridLayout->addWidget(this->addButton("0"), 3, 1);
     gridLayout->addWidget(this->addButton("#"), 3, 2);
-    QPushButton* callBtn = new QPushButton("\uf095");
+    QPushButton* callBtn = new QPushButton(QIcon::fromTheme("call-start"), "");
     gridLayout->addWidget(callBtn, 5, 0);
-    QPushButton* hangupAllBtn = new QPushButton("\uf3dd");
+    QPushButton* hangupAllBtn = new QPushButton(QIcon::fromTheme("call-stop"), "");
     gridLayout->addWidget(hangupAllBtn, 5, 2);
     layout->addLayout(gridLayout);
 

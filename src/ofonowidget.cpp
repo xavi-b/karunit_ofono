@@ -66,14 +66,12 @@ void OfonoWidget::connectVoiceCallManager()
 OfonoWidget::OfonoWidget(QWidget *parent)
     : QWidget(parent)
 {
-    this->setFont(QFont("Font Awesome 5 Free"));
-
     QVBoxLayout* layout = new QVBoxLayout;
 
     this->tabWidget = new QTabWidget;
     layout->addWidget(this->tabWidget);
     this->defaultWidget = new DefaultCallWidget;
-    this->tabWidget->addTab(this->defaultWidget, "\uf015");
+    this->tabWidget->addTab(this->defaultWidget, QIcon::fromTheme("go-home"), "");
 
     connect(this->defaultWidget, &DefaultCallWidget::call, this, &OfonoWidget::call);
     connect(this->defaultWidget, &DefaultCallWidget::hangupAll, this, [=]()
