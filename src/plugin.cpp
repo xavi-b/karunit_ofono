@@ -9,6 +9,12 @@ void KU_Ofono_PluginConnector::pluginSlot(const QString& signal, const QVariantM
     }
 }
 
+KU_Ofono_Plugin::KU_Ofono_Plugin()
+{
+    this->pluginConnector = new KU_Ofono_PluginConnector;
+    this->setPluginConnector(this->pluginConnector);
+}
+
 QString KU_Ofono_Plugin::name() const
 {
     return "Ofono";
@@ -38,8 +44,6 @@ bool KU_Ofono_Plugin::initialize()
 {
     this->ofonoWidget = new OfonoWidget;
 
-    this->pluginConnector = new KU_Ofono_PluginConnector;
-    this->setPluginConnector(this->pluginConnector);
     connect(this->pluginConnector, &KU_Ofono_PluginConnector::callSignal, this->ofonoWidget, &OfonoWidget::call);
     connect(this->ofonoWidget, &OfonoWidget::log, this->pluginConnector, &KU::PLUGIN::PluginConnector::log);
 
