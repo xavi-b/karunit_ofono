@@ -43,6 +43,24 @@ void OfonoWidget::connectVoiceCallManager()
         auto it = this->ofonoVoiceCallWidgets.find(call);
         if(it == this->ofonoVoiceCallWidgets.end())
         {
+            QString address = call.split('/').at(5);
+            address.replace("dev_", "");
+            address.replace("_", ":");
+            QProcess* recordProcess = new QProcess(this);
+            connect(recordProcess, qOverload<int, QProcess::ExitStatus>(&QProcess::finished), this, [this](int exitCode, QProcess::ExitStatus exitStatus){
+                emit log("Record process finished: " + QString::number(exitCode) + " " + QString::number(exitStatus == QProcess::ExitStatus::NormalExit));
+            });
+            connect(recordProcess, &QProcess::readyReadStandardOutput, this, [this, recordProcess](){
+                emit log("Record process output: " + recordProcess->readAllStandardOutput());
+            });
+            connect(recordProcess, &QProcess::readyReadStandardError, this, [this, recordProcess](){
+                emit log("Record process error: " + recordProcess->readAllStandardError());
+            });
+            recordProcess->start("/bin/sh -c \"LIBASOUND_THREAD_SAFE=0 /usr/bin/arecord -f s16_le | /usr/bin/aplay -D bluealsa:DEV=" + address + ",PROFILE=sco\"");
+            emit log("Record process started for: " + address);
+            if(!recordProcess->waitForStarted())
+               emit log("Record process failed: " + recordProcess->errorString() + " " + QString::number(recordProcess->exitCode()) + " " + recordProcess->readAllStandardError());
+
             this->ofonoVoiceCallWidgets.insert(call, ofonoVoiceCallWidget);
             this->tabWidget->addTab(ofonoVoiceCallWidget, ofonoVoiceCallWidget->incomingLine());
         }
