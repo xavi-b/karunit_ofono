@@ -29,6 +29,7 @@ class KU_Ofono_Plugin : public QObject, public KU::PLUGIN::PluginInterface
 
 public:
     KU_Ofono_Plugin();
+    ~KU_Ofono_Plugin();
     virtual QString name() const override;
     virtual QString id() const override;
     virtual KU::PLUGIN::PluginVersion version() const override;

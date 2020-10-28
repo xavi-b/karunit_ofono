@@ -15,6 +15,12 @@ KU_Ofono_Plugin::KU_Ofono_Plugin()
     this->setPluginConnector(this->pluginConnector);
 }
 
+KU_Ofono_Plugin::~KU_Ofono_Plugin()
+{
+    if(this->pluginConnector != nullptr)
+        delete this->pluginConnector;
+}
+
 QString KU_Ofono_Plugin::name() const
 {
     return "Ofono";
