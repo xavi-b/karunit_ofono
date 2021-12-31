@@ -1,11 +1,7 @@
 HEADERS += \
-    $$PWD/defaultcallwidget.h \
-    $$PWD/ofonowidget.h \
-    $$PWD/plugin.h \
-    $$PWD/voicecallwidget.h
+    $$PWD/ofonopluginconnector.h \
+    $$PWD/plugin.h
 
 SOURCES += \
-    $$PWD/defaultcallwidget.cpp \
-    $$PWD/ofonowidget.cpp \
-    $$PWD/plugin.cpp \
-    $$PWD/voicecallwidget.cpp
+    $$PWD/ofonopluginconnector.cpp \
+    $$PWD/plugin.cpp

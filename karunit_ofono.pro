@@ -1,7 +1,7 @@
 TEMPLATE        = lib
 CONFIG         += plugin c++17
 DEFINES        += QT_DEPRECATED_WARNINGS
-QT             += widgets dbus
+QT             += quick dbus
 TARGET          = karunit_ofono_plugin
 DESTDIR         = $$PWD/../karunit/app/plugins
 
@@ -35,3 +35,6 @@ SUBDIRS += \
     src/
 
 include(src/src.pri)
+
+RESOURCES += \
+    karunit_ofono.qrc

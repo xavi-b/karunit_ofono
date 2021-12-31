@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/karunit_ofono">
+        <file alias="widget.qml">qml/widget.qml</file>
+    </qresource>
+</RCC>

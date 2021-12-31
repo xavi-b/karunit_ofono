@@ -4,22 +4,10 @@
 #include <QtPlugin>
 #include <QIcon>
 #include <QDebug>
-#include <QLabel>
 #include <QDateTime>
 #include <QFontDatabase>
-#include "plugininterface.h"
 #include "settings.h"
-#include "ofonowidget.h"
-
-class KU_Ofono_PluginConnector : public KU::PLUGIN::PluginConnector
-{
-    Q_OBJECT
-public:
-    virtual void pluginSlot(QString const& signal, QVariantMap const& data) override;
-
-signals:
-    void callSignal(QString const& number);
-};
+#include "ofonopluginconnector.h"
 
 class KU_Ofono_Plugin : public QObject, public KU::PLUGIN::PluginInterface
 {
@@ -28,26 +16,17 @@ class KU_Ofono_Plugin : public QObject, public KU::PLUGIN::PluginInterface
     Q_INTERFACES(KU::PLUGIN::PluginInterface)
 
 public:
-    KU_Ofono_Plugin();
-    ~KU_Ofono_Plugin();
-    virtual QString name() const override;
-    virtual QString id() const override;
+    virtual QString                   name() const override;
+    virtual QString                   id() const override;
     virtual KU::PLUGIN::PluginVersion version() const override;
-    virtual QString license() const override;
-    virtual QIcon icon() const override;
-    virtual bool initialize() override;
-    virtual bool stop() override;
+    virtual QString                   license() const override;
+    virtual QString                   icon() const override;
+    virtual bool                      initialize() override;
+    virtual bool                      stop() override;
 
-    virtual QWidget* createWidget() override;
-    virtual QWidget* createSettingsWidget() override;
-    virtual QWidget* createAboutWidget() override;
-    virtual bool loadSettings() override;
-    virtual bool saveSettings() const override;
-
-private:
-    OfonoWidget* ofonoWidget = nullptr;
-    KU_Ofono_PluginConnector* pluginConnector = nullptr;
+    virtual bool                      loadSettings() override;
+    virtual bool                      saveSettings() const override;
+    virtual KU_Ofono_PluginConnector* getPluginConnector() override;
 };
-
 
 #endif // OFONOPLUGIN_H
