@@ -28,9 +28,11 @@ Item {
             }
 
             Repeater {
-                model: KUPOfonoPluginConnector.calls
+                model: KUPOfonoPluginConnector.callsAliases
                 TabButton {
-                    text: KUPOfonoPluginConnector.lineIdentification(modelData)
+                    text: KUPOfonoPluginConnector.callsAliases
+                          && KUPOfonoPluginConnector.lineIdentification(
+                              modelData)
                 }
             }
         }
@@ -102,25 +104,35 @@ Item {
             }
 
             Repeater {
-                model: KUPOfonoPluginConnector.calls
+                model: KUPOfonoPluginConnector.callsAliases
 
                 Rectangle {
                     color: "beige"
                     Column {
+                        anchors.fill: parent
+                        spacing: 5
                         Label {
-                            text: qsTr("Status ") + KUPOfonoPluginConnector.state(
-                                      modelData)
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: qsTr(
+                                      "Status ") + (KUPOfonoPluginConnector.callsAliases
+                                                    && KUPOfonoPluginConnector.state(
+                                                        modelData))
+                            horizontalAlignment: Qt.AlignHCenter
                         }
-                        Button {
-                            icon.name: "call-start"
-                            onClicked: {
-                                KUPOfonoPluginConnector.answer(modelData)
+                        Row {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            spacing: 5
+                            Button {
+                                icon.name: "call-start"
+                                onClicked: {
+                                    KUPOfonoPluginConnector.answer(modelData)
+                                }
                             }
-                        }
-                        Button {
-                            icon.name: "call-stop"
-                            onClicked: {
-                                KUPOfonoPluginConnector.hangup(modelData)
+                            Button {
+                                icon.name: "call-stop"
+                                onClicked: {
+                                    KUPOfonoPluginConnector.hangup(modelData)
+                                }
                             }
                         }
                     }

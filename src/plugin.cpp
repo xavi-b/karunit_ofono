@@ -29,6 +29,7 @@ QString KU_Ofono_Plugin::icon() const
 bool KU_Ofono_Plugin::initialize()
 {
     qmlRegisterSingletonInstance("KarunitPlugins", 1, 0, "KUPOfonoPluginConnector", this->pluginConnector);
+    this->getPluginConnector()->setup();
 
     return true;
 }

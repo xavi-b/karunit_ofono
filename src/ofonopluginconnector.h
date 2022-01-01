@@ -16,6 +16,7 @@ class KU_Ofono_PluginConnector : public KU::PLUGIN::PluginConnector
 public:
     KU_Ofono_PluginConnector(QObject* parent = nullptr);
     virtual void pluginSlot(QString const& signal, QVariantMap const& data) override;
+    void         setup();
 
     Q_INVOKABLE void call(QString const& number);
     Q_INVOKABLE void hangupAll();
@@ -29,7 +30,6 @@ public:
     Q_INVOKABLE QString incomingLine(QString const& call) const;
 
 signals:
-    void log(QString const& log);
     void callSignal(QString const& number);
     void callsChanged();
 

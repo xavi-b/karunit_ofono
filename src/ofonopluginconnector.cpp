@@ -24,7 +24,7 @@ void KU_Ofono_PluginConnector::connectModem()
         this->ofonoVoiceCallManager->setModemPath(this->ofonoModem->modemPath());
         connectVoiceCallManager();
     });
-    emit log("setPowered");
+    emit log(QString("setPowered"));
     // this->ofonoModem->setPowered(true);
     QDBusMessage    message = QDBusMessage::createMethodCall("org.ofono",
                                                           this->ofonoModem->modemPath(),
@@ -52,6 +52,12 @@ void KU_Ofono_PluginConnector::connectVoiceCallManager()
         ofonoVoiceCall->setVoiceCallPath(call);
         connect(ofonoVoiceCall, &QOfonoVoiceCall::lineIdentificationChanged, this, &KU_Ofono_PluginConnector::callsChanged);
         connect(ofonoVoiceCall, &QOfonoVoiceCall::stateChanged, this, &KU_Ofono_PluginConnector::callsChanged);
+        connect(ofonoVoiceCall, &QOfonoVoiceCall::lineIdentificationChanged, this, [=]() {
+            emit log("lineIdentificationChanged: " + call + " " + ofonoVoiceCall->lineIdentification());
+        });
+        connect(ofonoVoiceCall, &QOfonoVoiceCall::stateChanged, this, [=]() {
+            emit log("stateChanged: " + call + " " + ofonoVoiceCall->state());
+        });
         calls.insert(call, ofonoVoiceCall);
 
         emit callsChanged();
@@ -64,10 +70,10 @@ void KU_Ofono_PluginConnector::connectVoiceCallManager()
             emit log("Record process finished: " + QString::number(exitCode) + " " + QString::number(exitStatus == QProcess::ExitStatus::NormalExit));
         });
         connect(recordProcess, &QProcess::readyReadStandardOutput, this, [this, recordProcess]() {
-            emit log("Record process output: " + recordProcess->readAllStandardOutput());
+            emit log(QString("Record process output: ") + recordProcess->readAllStandardOutput());
         });
         connect(recordProcess, &QProcess::readyReadStandardError, this, [this, recordProcess]() {
-            emit log("Record process error: " + recordProcess->readAllStandardError());
+            emit log(QString("Record process error: ") + recordProcess->readAllStandardError());
         });
         recordProcess->start("/bin/sh -c \"LIBASOUND_THREAD_SAFE=0 /usr/bin/arecord -f s16_le | /usr/bin/aplay -D bluealsa:DEV=" + address + ",PROFILE=sco\"");
         emit log("Record process started for: " + address);
@@ -82,6 +88,7 @@ void KU_Ofono_PluginConnector::connectVoiceCallManager()
             calls[call]->deleteLater();
             calls.remove(call);
         }
+        emit callsChanged();
     });
 
     connect(this->ofonoVoiceCallManager, &QOfonoVoiceCallManager::dialComplete, this, [=](bool status) {
@@ -92,12 +99,18 @@ void KU_Ofono_PluginConnector::connectVoiceCallManager()
 KU_Ofono_PluginConnector::KU_Ofono_PluginConnector(QObject* parent)
     : KU::PLUGIN::PluginConnector(parent)
 {
+}
+
+void KU_Ofono_PluginConnector::setup()
+{
+    emit log(QString("setup Ofono"));
+
     this->ofonoManager = new QOfonoManager(this);
 
     connect(this->ofonoManager, &QOfonoManager::availableChanged, this, [=](bool available) {
         if (this->ofonoManager->modems().size() == 0)
         {
-            emit log("no modem");
+            emit log(QString("no modem"));
             return;
         }
 
@@ -119,14 +132,18 @@ KU_Ofono_PluginConnector::KU_Ofono_PluginConnector(QObject* parent)
 
 void KU_Ofono_PluginConnector::call(QString const& number)
 {
+    emit log(QString("call Ofono"));
     if (this->ofonoVoiceCallManager != nullptr)
         this->ofonoVoiceCallManager->dial(number, "enabled");
 }
 
 void KU_Ofono_PluginConnector::hangupAll()
 {
+    emit log(QString("hangupAll Ofono"));
     if (this->ofonoVoiceCallManager != nullptr)
         this->ofonoVoiceCallManager->hangupAll();
+    this->calls.clear();
+    emit callsChanged();
 }
 
 QStringList KU_Ofono_PluginConnector::callsAliases() const
