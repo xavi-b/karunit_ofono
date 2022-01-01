@@ -4,9 +4,18 @@ void KU_Ofono_PluginConnector::pluginSlot(const QString& signal, const QVariantM
 {
     if (signal == "dial")
     {
+        emitLogSignal(QString("dial called"));
         if (!data["number"].isNull() && !data["number"].toString().isEmpty())
             emit callSignal(data["number"].toString());
     }
+}
+
+bool KU_Ofono_PluginConnector::hasRegisteredPluginChoiceSignal(QString const& signal)
+{
+    if (signal == "dial")
+        return true;
+
+    return false;
 }
 
 void KU_Ofono_PluginConnector::connectModem()

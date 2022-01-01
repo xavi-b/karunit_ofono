@@ -16,6 +16,7 @@ class KU_Ofono_PluginConnector : public KU::PLUGIN::PluginConnector
 public:
     KU_Ofono_PluginConnector(QObject* parent = nullptr);
     virtual void pluginSlot(QString const& signal, QVariantMap const& data) override;
+    virtual bool hasRegisteredPluginChoiceSignal(QString const& signal) override;
     void         setup();
 
     Q_INVOKABLE void call(QString const& number);

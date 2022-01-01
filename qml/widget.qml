@@ -16,6 +16,14 @@ Item {
         KUPOfonoPluginConnector.hangupAll()
     }
 
+    Connections {
+        target: KUPOfonoPluginConnector
+        function onCallSignal(number) {
+            stack.currentIndex = 0
+            textinput.text = number
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
 
@@ -38,6 +46,7 @@ Item {
         }
 
         StackLayout {
+            id: stack
             Layout.fillWidth: true
             Layout.fillHeight: true
             currentIndex: bar.currentIndex
