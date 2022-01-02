@@ -32,9 +32,8 @@ LIBS += -L$$PWD/../karunit/third-party/xblog/lib -lxblog
 INCLUDEPATH += $$PWD/../karunit/third-party/xblog/include
 
 SUBDIRS += \
-    src/
+    src/ \
+    res/
 
 include(src/src.pri)
-
-RESOURCES += \
-    karunit_ofono.qrc
+include(res/res.pri)

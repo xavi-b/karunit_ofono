@@ -123,9 +123,9 @@ Item {
                         Label {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: qsTr(
-                                      "Status ") + (KUPOfonoPluginConnector.callsAliases
-                                                    && KUPOfonoPluginConnector.state(
-                                                        modelData))
+                                      "Status") + " " + (KUPOfonoPluginConnector.callsAliases
+                                                         && KUPOfonoPluginConnector.state(
+                                                             modelData))
                             horizontalAlignment: Qt.AlignHCenter
                         }
                         Row {
