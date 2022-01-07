@@ -44,7 +44,7 @@ bool KU_Ofono_Plugin::loadSettings()
     return true;
 }
 
-bool KU_Ofono_Plugin::saveSettings() const
+bool KU_Ofono_Plugin::saveSettings()
 {
     return KU::Settings::instance()->status() == QSettings::NoError;
 }
